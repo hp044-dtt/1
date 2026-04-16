@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	Token  = "8344961429:AAEg71PXgEOFB-9kVGBFHm8tXFPvw8MHv0A"
+	Token  = "8528053368:AAF5faIvI90mjkViQ-CY9Lo-nAjyjiWP6lY"
 	ChatID = "8516763046"
 )
 
