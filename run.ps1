@@ -7,7 +7,7 @@ New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
 Set-Location $tempDir
 
 # 🔥 THAY ĐỔI DÒNG NÀY - USERNAME/REPO CỦA BẠN
-$baseUrl = "https://raw.githubusercontent.com/hp044-dtt/zz/main/"
+$baseUrl = "https://raw.githubusercontent.com/hp044-dtt/1/main/"
 
 # Danh sách 7 file cần tải
 $files = @(
